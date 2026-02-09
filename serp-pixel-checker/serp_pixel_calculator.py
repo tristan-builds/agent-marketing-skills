@@ -107,9 +107,17 @@ def _find_cjk_font():
     ], "CJK")
 
 
+def _find_korean_font():
+    return _find_font([
+        "malgun.ttf", "MalgunGothic.ttf",
+        "NotoSansKR-Regular.otf", "NotoSansKR-Regular.ttf",
+    ], "Korean")
+
+
 ARIAL_PATH = _find_arial()
 THAI_FONT_PATH = _find_thai_font()
 CJK_FONT_PATH = _find_cjk_font()
+KOREAN_FONT_PATH = _find_korean_font()
 
 
 # ---------------------------------------------------------------------------
@@ -123,9 +131,16 @@ def _detect_script(text):
         # Thai
         if 0x0E00 <= cp <= 0x0E7F:
             return "thai"
-        # CJK Unified Ideographs, Extension A, Radicals, Symbols, Fullwidth
+        # Korean Hangul Syllables and Jamo
+        if (0xAC00 <= cp <= 0xD7AF or 0x1100 <= cp <= 0x11FF or
+                0x3130 <= cp <= 0x318F or 0xA960 <= cp <= 0xA97F or
+                0xD7B0 <= cp <= 0xD7FF):
+            return "korean"
+        # CJK Unified Ideographs, Extension A, Radicals, Hiragana, Katakana,
+        # CJK Symbols, Fullwidth Forms
         if (0x4E00 <= cp <= 0x9FFF or 0x3400 <= cp <= 0x4DBF or
                 0x2E80 <= cp <= 0x2EFF or 0x3000 <= cp <= 0x303F or
+                0x3040 <= cp <= 0x309F or 0x30A0 <= cp <= 0x30FF or
                 0xFF00 <= cp <= 0xFFEF or 0x20000 <= cp <= 0x2A6DF):
             return "cjk"
     return "default"
@@ -136,6 +151,8 @@ def _font_path_for_text(text):
     script = _detect_script(text)
     if script == "thai" and THAI_FONT_PATH:
         return THAI_FONT_PATH
+    if script == "korean" and KOREAN_FONT_PATH:
+        return KOREAN_FONT_PATH
     if script == "cjk" and CJK_FONT_PATH:
         return CJK_FONT_PATH
     return ARIAL_PATH
