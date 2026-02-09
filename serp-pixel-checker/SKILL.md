@@ -19,8 +19,9 @@ Google truncates SERP snippets by **pixel width**, not character count. This ski
 | Script | Font Used | Accuracy |
 |--------|-----------|----------|
 | Latin, Cyrillic, Greek, Arabic | Arial | 0-1px |
+| Korean | Malgun Gothic (auto-detected) | 0-5px |
 | Thai | Tahoma (auto-detected) | 0-5px |
-| Chinese / CJK | Microsoft YaHei (auto-detected) | 0-4px |
+| Chinese / Japanese / CJK | Microsoft YaHei (auto-detected) | 0-4px |
 
 ## Usage
 
@@ -54,8 +55,9 @@ Add `--json` for machine-readable output.
 The script auto-detects fonts on **Windows**, **macOS**, and **Linux**:
 
 - **Arial** — Primary font for Latin, Cyrillic, Greek, Arabic
+- **Malgun Gothic** — Auto-detected for Korean (Hangul)
 - **Tahoma** — Auto-detected for Thai script
-- **Microsoft YaHei** / Noto Sans CJK — Auto-detected for Chinese/CJK
+- **Microsoft YaHei** / Noto Sans CJK — Auto-detected for Chinese/Japanese/CJK
 
 Override the primary font with `SERP_FONT_PATH` environment variable.
 
