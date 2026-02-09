@@ -8,7 +8,7 @@ These skills follow the open [Agent Skills specification](https://agentskills.io
 
 | Skill | Description |
 |-------|-------------|
-| [serp-pixel-checker](./serp-pixel-checker/) | Validate meta title and description pixel widths against Google SERP limits (580px title, 990px description). Uses HarfBuzz text shaping with automatic font fallback for 0–1px accuracy across Latin, Cyrillic, Greek, Arabic, Thai, Chinese, and more. Supports single strings, small batches, and full spreadsheet audits. |
+| [serp-pixel-checker](./serp-pixel-checker/) | Validate meta title and description pixel widths against Google SERP limits (580px title, 990px description). Uses HarfBuzz text shaping with automatic font fallback for accuracy across Latin, Cyrillic, Greek, Arabic, Korean, Thai, Chinese, Japanese, and more. Supports single strings, small batches, and full spreadsheet audits. |
 
 ## Installation
 
@@ -39,8 +39,9 @@ The SERP pixel checker uses the same fonts browsers apply on Google SERPs, with 
 | Script | Font | Accuracy |
 |--------|------|----------|
 | Latin, Cyrillic, Greek, Arabic | Arial | 0–1px |
+| Korean | Malgun Gothic | 0–5px |
 | Thai | Tahoma | 0–5px |
-| Chinese / CJK | Microsoft YaHei | 0–4px |
+| Chinese / Japanese / CJK | Microsoft YaHei | 0–4px |
 
 ## Platform Support
 
