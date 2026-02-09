@@ -7,21 +7,18 @@ description: Check meta title and description pixel widths against Google SERP l
 
 Google truncates SERP snippets by **pixel width**, not character count. This skill validates meta titles and descriptions using HarfBuzz text shaping with automatic font fallback — the same rendering pipeline browsers use. Accurate to within 0-1px across all scripts.
 
-## Pixel Limits
+## SERP Limits
 
-| Field | Font | Size | Max Pixels |
-|-------|------|------|------------|
-| Title | arial, sans-serif | 20px | 580px |
-| Description | arial, sans-serif | 14px | 990px |
-
-## Language Support
+Google renders titles at **20px** (max **580px**) and descriptions at **14px** (max **990px**). The CSS rule is `font-family: arial, sans-serif` — browsers fall back to system fonts for scripts Arial doesn't cover.
 
 | Script | Font Used | Accuracy |
 |--------|-----------|----------|
-| Latin, Cyrillic, Greek, Arabic | Arial | 0-1px |
-| Korean | Malgun Gothic (auto-detected) | 0-5px |
-| Thai | Tahoma (auto-detected) | 0-5px |
-| Chinese / Japanese / CJK | Microsoft YaHei (auto-detected) | 0-4px |
+| Latin, Cyrillic, Greek, Arabic | Arial | 0–1px |
+| Korean | Malgun Gothic | 0–5px |
+| Thai | Tahoma | 0–5px |
+| Chinese / Japanese / CJK | Microsoft YaHei | 0–4px |
+
+Fonts are auto-detected from system directories. The script selects the correct font based on Unicode script detection.
 
 ## Usage
 
