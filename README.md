@@ -8,7 +8,7 @@ These skills follow the open [Agent Skills specification](https://agentskills.io
 
 | Skill | Description |
 |-------|-------------|
-| [serp-pixel-checker](./serp-pixel-checker/) | Validate meta title and description pixel widths against Google SERP limits (580px title, 990px description). Uses Arial font rendering via Pillow for accuracy within 0–4px of browser-based checkers. Supports single strings, small batches, and full spreadsheet audits. |
+| [serp-pixel-checker](./serp-pixel-checker/) | Validate meta title and description pixel widths against Google SERP limits (580px title, 990px description). Uses HarfBuzz text shaping with automatic font fallback for 0–1px accuracy across Latin, Cyrillic, Greek, Arabic, Thai, Chinese, and more. Supports single strings, small batches, and full spreadsheet audits. |
 
 ## Installation
 
@@ -28,15 +28,23 @@ Copy the skill folder into your agent's skills directory. See the [Agent Skills 
 
 Skills may bundle Python scripts with their own dependencies. Check each skill's `SKILL.md` for specifics.
 
-Common dependencies across this collection:
-
 ```bash
-pip install pillow openpyxl
+pip install uharfbuzz openpyxl
 ```
+
+## Language Support
+
+The SERP pixel checker uses the same fonts browsers apply on Google SERPs, with automatic script detection and font fallback:
+
+| Script | Font | Accuracy |
+|--------|------|----------|
+| Latin, Cyrillic, Greek, Arabic | Arial | 0–1px |
+| Thai | Tahoma | 0–5px |
+| Chinese / CJK | Microsoft YaHei | 0–4px |
 
 ## Platform Support
 
-Scripts in this collection support **Windows**, **macOS**, and **Linux** out of the box.
+Scripts in this collection support **Windows**, **macOS**, and **Linux** out of the box. Fonts are auto-detected from system directories. Override the primary font with the `SERP_FONT_PATH` environment variable if needed.
 
 ## Contributing
 
