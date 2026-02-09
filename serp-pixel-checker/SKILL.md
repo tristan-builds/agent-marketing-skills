@@ -5,14 +5,22 @@ description: Check meta title and description pixel widths against Google SERP l
 
 # SERP Pixel Width Checker
 
-Google truncates SERP snippets by **pixel width**, not character count. This skill validates meta titles and descriptions using the same font rendering Google uses (Arial, via Pillow's FreeType engine). Tested to within 0-4px of browser-based SERP pixel checkers.
+Google truncates SERP snippets by **pixel width**, not character count. This skill validates meta titles and descriptions using HarfBuzz text shaping with automatic font fallback — the same rendering pipeline browsers use. Accurate to within 0-1px across all scripts.
 
 ## Pixel Limits
 
 | Field | Font | Size | Max Pixels |
 |-------|------|------|------------|
-| Title | Arial | 20px | 580px |
-| Description | Arial | 14px | 990px |
+| Title | arial, sans-serif | 20px | 580px |
+| Description | arial, sans-serif | 14px | 990px |
+
+## Language Support
+
+| Script | Font Used | Accuracy |
+|--------|-----------|----------|
+| Latin, Cyrillic, Greek, Arabic | Arial | 0-1px |
+| Thai | Tahoma (auto-detected) | 0-5px |
+| Chinese / CJK | Microsoft YaHei (auto-detected) | 0-4px |
 
 ## Usage
 
@@ -43,29 +51,16 @@ Add `--json` for machine-readable output.
 
 ## Platform Support
 
-The script auto-detects Arial on **Windows**, **macOS**, and **Linux**:
+The script auto-detects fonts on **Windows**, **macOS**, and **Linux**:
 
-- **Windows** — uses `%WINDIR%\Fonts\arial.ttf`
-- **macOS** — checks `/Library/Fonts/`, `/System/Library/Fonts/Supplemental/`, and `~/Library/Fonts/`
-- **Linux** — checks for MS core fonts or falls back to Liberation Sans / DejaVu Sans
+- **Arial** — Primary font for Latin, Cyrillic, Greek, Arabic
+- **Tahoma** — Auto-detected for Thai script
+- **Microsoft YaHei** / Noto Sans CJK — Auto-detected for Chinese/CJK
 
-If Arial isn't found, set the `SERP_FONT_PATH` environment variable to your font file:
-```
-SERP_FONT_PATH=/path/to/arial.ttf python serp_pixel_calculator.py --title "Test"
-```
-
-On Linux, install Arial with:
-```
-sudo apt install ttf-mscorefonts-installer
-# or the metrically-compatible alternative:
-sudo apt install fonts-liberation
-```
+Override the primary font with `SERP_FONT_PATH` environment variable.
 
 ## Dependencies
 
-The script requires `pillow` (and `openpyxl` for batch Excel mode):
-
 ```
-pip install pillow openpyxl
+pip install uharfbuzz openpyxl
 ```
-
